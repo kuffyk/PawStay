@@ -23,4 +23,20 @@ def sign_up
 end
 
 def sign_in
+  puts 'Введіть логін'
+  login = gets.chomp.strip
+
+  puts 'Введіть пароль'
+  password = gets.chomp.strip
+
+  users = load_from_database('users.yml')
+  user = users.find { |u| u[:login] == login && u[:password] == password }
+
+  if user.nil?
+    puts 'Невірний логін або пароль'
+    return
+  end
+
+  puts "Ви успішно увійшли"
+  user
 end
