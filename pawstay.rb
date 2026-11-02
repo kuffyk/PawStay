@@ -1,4 +1,5 @@
-require "yaml"
+require 'yaml'
+require 'bcrypt'
 
 def user_input
   gets.chomp
