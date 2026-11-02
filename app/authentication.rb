@@ -1,12 +1,26 @@
 require_relative 'database'
 
 def sign_up
-  puts 'Введіть ваш логін'
+  puts 'Введіть логін'
   login = gets.chomp.strip
 
   users = load_from_database('users.yml')
 
-  if users.any? { |user| user[:login] == login }
+  if users.any? { |u| u[:login] == login }
     puts 'Логін вже зайнято'
     return
   end
+
+  puts 'Введіть пароль'
+  password = gets.chomp.strip
+
+  last_user = users.max_by { |u| u[:id] }
+  new_id = last_user ? last_user[:id] + 1 : 1
+
+  add_to_database('users.yml', { id: new_id, login: login, password: secure_password(password) })
+
+  puts 'Реєстрація пройшла успішно!'
+end
+
+def sign_in
+end

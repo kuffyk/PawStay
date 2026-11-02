@@ -5,3 +5,7 @@ def show_menu
   puts '2: Увійти'
   puts '3: Вийти'
 end
+
+def incorrect_choice
+  puts 'Ви ввели невірне значення'
+end

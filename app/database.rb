@@ -19,4 +19,4 @@ end
 
 def secure_password(password) = BCrypt::Password.create(password)
 
-def file_path_for(file_name) = "database/#{file_name}"
+def file_path_for(file_name) = File.join(__dir__, '..', 'database', file_name)
