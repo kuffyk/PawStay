@@ -62,5 +62,8 @@ def sign_in
   end
 
   puts "Ви успішно увійшли" 
+
+  open_menu(user)
+
   user
 end
