@@ -13,20 +13,21 @@ end
 def show_user_menu(user)
   puts "Вітаємо, #{user[:login]}!"
   puts 'Оберіть дію:'
-  puts '1: Мої тварини'
-  puts '2: Номери'
-  puts '3: Мої бронювання'
-  puts '4: Вийти з акаунта'
+  puts '1: Мій профіль'
+  puts '2: Мої тварини'
+  puts '3: Забронювати номер'
+  puts '4: Мої бронювання'
+  puts '5: Вийти з акаунта'
 end
 
-def show_menu_for_admin
+def show_menu_for_admin(user)
   puts "Вітаємо, #{user[:login]}!"
-  puts 'Оберіть дію:'
-  puts '1: Мої тварини'
-  puts '2: Номери'
-  puts '3: Мої бронювання'
-  puts '4: Увіти в адмін меню'
-  puts '5: Вийти з акаунта'
+  puts '1: Мій профіль'
+  puts '2: Мої тварини'
+  puts '3: Забронювати номер'
+  puts '4: Мої бронювання'
+  puts '5: Увійти в адмін меню'
+  puts '6: Вийти з акаунта'
 end
 
 def show_admin_panel
