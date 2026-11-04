@@ -52,3 +52,15 @@ def admin_menu(user)
   end
 end
 
+def profile_menu(user)
+  loop do
+    show_profile(user)
+
+    case get.chomp.strip
+    when '1' then change_password(user)
+    when '2' then change_login(user)
+    when '3' then return
+      # продолжать тут
+    end
+  end
+end
