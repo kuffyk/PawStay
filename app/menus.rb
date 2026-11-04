@@ -27,7 +27,7 @@ def admin_main_menu(user)
     show_menu_for_admin(user)
 
     case gets.chomp.strip
-    when '1' then puts 'Профіль'
+    when '1' then puts show_profile(user)
     when '2' then puts 'Мої тварини'
     when '3' then puts 'Бронювання'
     when '4' then puts 'Мої бронювання'
@@ -51,3 +51,4 @@ def admin_menu(user)
     end
   end
 end
+

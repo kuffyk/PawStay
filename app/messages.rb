@@ -17,7 +17,6 @@ def show_user_menu(user)
   puts '2: Мої тварини'
   puts '3: Забронювати номер'
   puts '4: Мої бронювання'
-  puts '5: Вийти з акаунта'
 end
 
 def show_menu_for_admin(user)
@@ -27,7 +26,6 @@ def show_menu_for_admin(user)
   puts '3: Забронювати номер'
   puts '4: Мої бронювання'
   puts '5: Увійти в адмін меню'
-  puts '6: Вийти з акаунта'
 end
 
 def show_admin_panel(user)
@@ -35,4 +33,17 @@ def show_admin_panel(user)
   puts '1: Бронювання'
   puts '2: Користувачі'
   puts '3: Назад в меню'
+end
+
+def show_profile(user)
+  puts 'Профіль'
+  puts "Логін: #{user[:login]}"
+  puts "Роль: #{user[:role]}"
+  puts "Id: #{user[:id]}"
+
+  puts '1: Змінити пароль'
+  puts '2: Змінити логін'
+  puts '3: Назад до меню'
+  puts '4: Вийти з акаунту'
+  puts '5: Видалити акаунт'
 end
