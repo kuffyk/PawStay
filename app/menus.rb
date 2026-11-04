@@ -40,7 +40,7 @@ end
 
 def admin_menu(user)
   loop do
-    show_admin_menu(user)
+    show_admin_panel(user)
 
     case gets.chomp.strip
     when '1' then puts 'Користувачі'

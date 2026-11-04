@@ -30,7 +30,7 @@ def show_menu_for_admin(user)
   puts '6: Вийти з акаунта'
 end
 
-def show_admin_panel
+def show_admin_panel(user)
   puts 'Адмін панель:'
   puts '1: Бронювання'
   puts '2: Користувачі'
