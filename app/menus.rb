@@ -71,8 +71,8 @@ def profile_menu(user)
     when '1' then change_login(user)
     when '2' then change_password(user)
     when '3' then return
-    when '3' then return :logout
-    when '4' 
+    when '4' then return :logout
+    when '5' 
       if delete_account(user)
     return :deleted
       end
