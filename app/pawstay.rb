@@ -3,7 +3,7 @@ require_relative 'authentication'
 
 def run
   loop do
-    show_menu
+    show_authentication_menu
 
     user_input = gets.chomp.strip
 
