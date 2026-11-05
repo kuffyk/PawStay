@@ -3,8 +3,6 @@ require_relative 'authentication'
 
 def run
   loop do
-    puts I18n.t('guest_menu.welcome')
-    puts I18n.t('guest_menu.choose_action')
     show_authentication_menu
 
     user_input = gets.chomp.strip

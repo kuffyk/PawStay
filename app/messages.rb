@@ -1,15 +1,9 @@
-require 'i18n'
-
-I18n.load_path += Dir[File.expand_path("config/locales") + "/*.yml"]
-I18n.default_locale = :en\
-
 def show_authentication_menu
   puts 'Вітаємо в PawStay!'
   puts 'Оберіть дію:'
   puts '1: Зареєструватися'
   puts '2: Увійти'
-  puts '3: Змінити мову на українську'
-  puts '4: Вийти'
+  puts '3: Вийти'
 end
 
 def incorrect_choice
