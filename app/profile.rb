@@ -60,3 +60,24 @@ def change_password(user)
 
   puts 'Ваш пароль змінено!'
 end
+
+def delete_account(user)
+  puts 'Введіть ваш пароль'
+  password = gets.chomp.strip
+
+  if BCrypt::Password.new(user[:password]) != password
+    puts 'Невірний пароль'
+    return false
+  end
+
+  puts 'Ви впевнені? (так/ні)'
+
+  if gets.chomp.strip.downcase == 'ні'
+    puts 'Видалення скасовано'
+    return false
+  end
+
+  delete_from_database('users.yml', user[:id])
+  puts 'Акаунт видалено'
+  true
+end
