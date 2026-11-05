@@ -12,11 +12,16 @@ def user_menu(user)
     show_user_menu(user)
 
     case gets.chomp.strip
-    when '1' then puts 'Профіль'
+    when '1'
+  result = profile_menu(user)
+
+  if result == :logout || result == :deleted
+    return
+  end
     when '2' then puts 'Мої тварини'
     when '3' then puts 'Бронювання'
     when '4' then puts 'Мої бронювання'
-    when '5' then return
+    when '5' then return 
     else incorrect_choice
     end
   end
@@ -27,7 +32,12 @@ def admin_main_menu(user)
     show_menu_for_admin(user)
 
     case gets.chomp.strip
-    when '1' then puts show_profile(user)
+    when '1'
+  result = profile_menu(user)
+
+  if result == :logout || result == :deleted
+    return
+  end
     when '2' then puts 'Мої тварини'
     when '3' then puts 'Бронювання'
     when '4' then puts 'Мої бронювання'
@@ -56,11 +66,10 @@ def profile_menu(user)
   loop do
     show_profile(user)
 
-    case get.chomp.strip
+    case gets.chomp.strip
     when '1' then change_password(user)
     when '2' then change_login(user)
     when '3' then return
-      # продолжать тут
     end
   end
 end
