@@ -1,4 +1,5 @@
 require_relative 'messages'
+require_relative 'profile'
 
 def open_menu(user)
   case user[:role]
@@ -67,9 +68,15 @@ def profile_menu(user)
     show_profile(user)
 
     case gets.chomp.strip
-    when '1' then change_password(user)
-    when '2' then change_login(user)
+    when '1' then change_login(user)
+    when '2' then change_password(user)
     when '3' then return
+    when '3' then return :logout
+    when '4' 
+      if delete_account(user)
+    return :deleted
+      end
+    else incorrect_choice
     end
   end
 end

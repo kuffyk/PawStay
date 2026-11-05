@@ -17,6 +17,10 @@ def load_from_database(file_name)
   YAML.safe_load_file(file_path_for(file_name), permitted_classes: [String, Symbol, Integer, BCrypt::Password])
 end
 
+def save_to_database(file_name, records)
+  File.write(file_path_for(file_name), records.to_yaml)
+end
+
 def update_in_database(file_name, id, changes)
   records = load_from_database(file_name)
   record = records.find { |r| r[:id] == id }

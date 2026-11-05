@@ -41,8 +41,8 @@ def show_profile(user)
   puts "Роль: #{user[:role]}"
   puts "Id: #{user[:id]}"
 
-  puts '1: Змінити пароль'
-  puts '2: Змінити логін'
+  puts '1: Змінити логін'
+  puts '2: Змінити пароль'
   puts '3: Назад до меню'
   puts '4: Вийти з акаунту'
   puts '5: Видалити акаунт'
