@@ -54,7 +54,7 @@ def admin_menu(user)
     case gets.chomp.strip
     when '1' then puts 'Користувачі'
     when '2' then puts 'Усі бронювання'
-    when '3' then puts 'Номери'
+    when '3' then rooms_menu
     when '4' then return
     else incorrect_choice
     end
