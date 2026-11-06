@@ -111,3 +111,18 @@ def edit_room
   update_in_database('rooms.yml', room[:id], changes)
   puts 'Номер оновлено!'
 end
+
+def delete_room
+  room = choose_room('Введіть номер зі списку для видалення')
+  return if room.nil?
+
+  puts "Видалити #{room[:name]}? (так/ні)"
+
+if gets.chomp.strip.downcase == 'ні'
+    puts 'Видалення скасовано'
+    return
+  end
+
+  delete_from_database('rooms.yml', room[:id])
+  puts 'Номер видалено'
+end
