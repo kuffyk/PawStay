@@ -86,8 +86,9 @@ def pets_menu(user)
     case gets.chomp.strip
     when '1' then list_pets(user)
     when '2' then add_pet(user)
-    when '3' then delete_pet(user)
-    when '4' then return
+    when '3' then edit_pet(user)
+    when '4' then delete_pet(user)
+    when '5' then return
     else incorrect_choice
     end
   end
