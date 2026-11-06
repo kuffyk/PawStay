@@ -77,3 +77,17 @@ def profile_menu(user)
     end
   end
 end
+
+def pets_menu(user)
+  loop do
+    show_pets_menu
+
+    case gets.chomp.strip
+    when '1' then list_pets(user)
+    when '2' then add_pet(user)
+    when '3' then delete_pet(user)
+    when '4' then return
+    else incorrect_choice
+    end
+  end
+end
