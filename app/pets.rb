@@ -52,3 +52,33 @@ puts 'Введіть вид (кіт, собака..)'
 
   puts 'Тварину додано!'
 end
+
+def delete_pet(user)
+  pets = user_pets(user)
+
+  if pets.empty?
+    puts 'У вас ще немає тварин'
+    return
+  end
+
+  show_pets(pets)
+  puts 'Введіть номер тварини для видалення'
+
+  index = gets.chomp.strip.to_i
+  pet = pets[index - 1] if index&.positive?
+
+  if pet.nil?
+    incorrect_choice
+    return
+  end
+
+  puts "Видалити #{pet[:name]}? (так/ні)"
+
+  if gets.chomp.strip.downcase == 'ні'
+    puts 'Видалення скасовано'
+    return
+  end
+
+  delete_from_database('pets.yml', pet[:id])
+  puts 'Тварину видалено'
+end
