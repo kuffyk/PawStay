@@ -81,3 +81,22 @@ def delete_pet(user)
   delete_from_database('pets.yml', pet[:id])
   puts 'Тварину видалено'
 end
+
+def choose_pet(user, action_text)
+  pets = user_pets(user)
+
+  if pets.empty?
+    puts 'У вас ще немає тварин'
+    return nil
+  end
+
+  show_pets(pets)
+  puts action_text
+
+  index = gets.chomp.strip.to_i
+  pet = pets[index - 1] if index.positive?
+
+  incorrect_choice if pet.nil?
+  pet
+end
+
