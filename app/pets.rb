@@ -24,7 +24,6 @@ def add_pet(user)
     incorrect_choice
     return
   end
-end
 
 puts 'Введіть вид (кіт, собака..)'
   species = gets.chomp.strip

@@ -1,5 +1,6 @@
 require_relative 'messages'
 require_relative 'profile'
+require_relative 'pets'
 
 def open_menu(user)
   case user[:role]
@@ -18,7 +19,7 @@ def user_menu(user)
   if result == :logout || result == :deleted
     return
   end
-    when '2' then puts 'Мої тварини'
+    when '2' then puts pets_menu(user)
     when '3' then puts 'Бронювання'
     when '4' then puts 'Мої бронювання'
     else incorrect_choice
@@ -37,7 +38,7 @@ def admin_main_menu(user)
   if result == :logout || result == :deleted
     return
   end
-    when '2' then puts 'Мої тварини'
+    when '2' then pets_menu(user)
     when '3' then puts 'Бронювання'
     when '4' then puts 'Мої бронювання'
     when '5' then admin_menu(user)
