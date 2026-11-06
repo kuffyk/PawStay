@@ -49,3 +49,11 @@ def show_profile(user)
   puts '4: Вийти з акаунту'
   puts '5: Видалити акаунт'
 end
+
+def show_pets_menu
+  puts 'Мої тварини'
+  puts '1: Переглянути список'
+  puts '2: Додати тварину'
+  puts '3: Видалити тварину'
+  puts '4: Назад до меню'
+end
