@@ -93,3 +93,18 @@ def pets_menu(user)
     end
   end
 end
+
+def rooms_menu
+  loop do
+    show_rooms_menu
+
+    case gets.chomp.strip
+    when '1' then list_rooms
+    when '2' then add_room
+    when '3' then edit_room
+    when '4' then delete_room
+    when '5' then return
+    else incorrect_choice
+    end
+  end
+end
