@@ -1,6 +1,7 @@
 require_relative 'database'
 require_relative 'messages'
 require_relative 'menus'
+require 'i18n'
 
 ADMIN_CODE = 'pawstay-admin'
 

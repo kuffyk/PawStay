@@ -14,7 +14,10 @@ def add_to_database(file_name, new_entity)
 end
 
 def load_from_database(file_name)
-  YAML.safe_load_file(file_path_for(file_name), permitted_classes: [String, Symbol, Integer, BCrypt::Password])
+  path = file_path_for(file_name)
+  return [] unless File.exist?(path)
+
+  YAML.safe_load_file(path, permitted_classes: [String, Symbol, Integer, BCrypt::Password]) || []
 end
 
 def save_to_database(file_name, records)
