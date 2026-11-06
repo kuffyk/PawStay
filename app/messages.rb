@@ -68,3 +68,21 @@ def show_pets(pets)
     number += 1
   end
 end
+
+def show_rooms_menu
+  puts 'Номери'
+  puts '1: Переглянути список'
+  puts '2: Додати номер'
+  puts '3: Змінити номер'
+  puts '4: Видалити номер'
+  puts '5: Назад'
+end
+
+def show_rooms(rooms)
+  number = 1
+
+  rooms.each do |room|
+    puts "#{number}. #{room[:name]} (#{room[:species]}, #{room[:price]} грн/доба)"
+    number += 1
+  end
+end
