@@ -100,3 +100,48 @@ def choose_pet(user, action_text)
   pet
 end
 
+def edit_pet(user)
+  pet = choose_pet(user, 'Введіть номер тварини для зміни')
+  return if pet.nil?
+
+  changes = {}
+
+  puts "Кличка (зараз: #{pet[:name]}). Enter - залишити без змін"
+  name = gets.chomp.strip
+  changes[:name] = name unless name.empty?
+
+  puts "Вид (зараз: #{pet[:species]}). Enter - залишити без змін"
+  species = gets.chomp.strip
+  changes[:species] = species unless species.empty?
+
+  puts "Вік (зараз: #{pet[:age]}). Enter - залишити без змін"
+  age_input = gets.chomp.strip
+
+  unless age_input.empty?
+    age = age_input.to_i
+
+    if age.negative? || (age == 0 && age_input != '0')
+      puts 'Вік має бути числом від 0'
+      return
+    end
+
+    changes[:age] = age
+  end
+
+  puts "Нотатки (зараз: #{pet[:notes]}). Enter - залишити, '-' - очистити"
+  notes = gets.chomp.strip
+
+  if notes == '-'
+    changes[:notes] = ''
+  elsif !notes.empty?
+    changes[:notes] = notes
+  end
+
+  if changes.empty?
+    puts 'Нічого не змінено'
+    return
+  end
+
+  update_in_database('pets.yml', pet[:id], changes)
+  puts 'Дані змінено!'
+end
