@@ -57,3 +57,13 @@ def show_pets_menu
   puts '3: Видалити тварину'
   puts '4: Назад до меню'
 end
+
+def show_pets(pets)
+  number = 1
+
+  pets.each do |pet|
+    puts "#{number}. #{pet[:name]} (#{pet[:species]}, #{pet[:age]} р.)"
+    puts "   Нотатки: #{pet[:notes]}" unless pet[:notes].empty?
+    number += 1
+  end
+end
