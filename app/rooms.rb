@@ -78,3 +78,36 @@ def add_room
 
   puts 'Номер додано!'
 end
+
+def edit_room
+  room = choose_room('Введіть номер зі списку для зміни')
+  return if room.nil?
+
+  changes = {}
+
+  puts "Назва (зараз: #{room[:name]}). Enter - залишити"
+  name = gets.chomp.strip
+  changes[:name] = name unless name.empty?
+
+  puts "Ціна (зараз: #{room[:price]}). Enter - залишити"
+  price_input = gets.chomp.strip
+
+  unless price_input.empty?
+    price = price_input.to_i
+
+    if price <= 0
+      puts 'Ціна має бути числом більше 0'
+      return
+    end
+
+    changes[:price] = price
+  end
+
+  if changes.empty?
+    puts 'Нічого не змінено'
+    return
+  end
+
+  update_in_database('rooms.yml', room[:id], changes)
+  puts 'Номер оновлено!'
+end
