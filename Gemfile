@@ -6,3 +6,5 @@ source 'https://rubygems.org'
 gem 'rubocop', '~> 1.91'
 
 gem "bcrypt", "~> 3.1"
+
+gem 'i18n'
