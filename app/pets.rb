@@ -73,7 +73,7 @@ def delete_pet(user)
 
   puts "Видалити #{pet[:name]}? (так/ні)"
 
-  if gets.chomp.strip.downcase == 'ні'
+  unless confirmed?
     puts 'Видалення скасовано'
     return
   end
