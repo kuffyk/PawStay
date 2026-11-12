@@ -112,6 +112,13 @@ def edit_room
   puts 'Номер оновлено!'
 end
 
+puts "Вид (зараз: #{room[:species]}). Enter - залишити"
+if gets.chomp.strip != ''
+  puts 'Змінити вид можна лише через вибір нижче'
+  species = choose_species
+  changes[:species] = species unless species.nil?
+end
+
 def delete_room
   room = choose_room('Введіть номер зі списку для видалення')
   return if room.nil?
