@@ -16,10 +16,10 @@ def user_menu(user)
 
     case gets.chomp.strip
     when '1'
-  result = profile_menu(user)
-  if result == :logout || result == :deleted
-    return
-  end
+    result = profile_menu(user)
+    if result == :logout || result == :deleted
+      return
+    end
     when '2' then puts pets_menu(user)
     when '3' then puts 'Бронювання'
     when '4' then puts 'Мої бронювання'
