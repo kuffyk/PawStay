@@ -76,6 +76,9 @@ def delete_account(user)
   puts 'Видалення скасовано'
   return false
   end
+  
+  pets = load_from_database('pets.yml').reject { |pet| pet[:user_id] == user[:id] }
+  save_to_database('pets.yml', pets)
 
   delete_from_database('users.yml', user[:id])
   puts 'Акаунт видалено'
