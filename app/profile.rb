@@ -72,9 +72,9 @@ def delete_account(user)
 
   puts 'Ви впевнені? (так/ні)'
 
-  if gets.chomp.strip.downcase == 'ні'
-    puts 'Видалення скасовано'
-    return false
+  unless confirmed?
+  puts 'Видалення скасовано'
+  return false
   end
 
   delete_from_database('users.yml', user[:id])
