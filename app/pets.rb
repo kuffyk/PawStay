@@ -36,7 +36,7 @@ puts 'Введіть вид (кіт, собака..)'
   age = gets.chomp.strip.to_i
 
   if age.nil? || age.negative?
-    puts incorrect_choice
+    incorrect_choice
     return
   end
 
