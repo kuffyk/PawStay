@@ -1,6 +1,7 @@
 require_relative 'messages'
 require_relative 'profile'
 require_relative 'pets'
+require_relative 'rooms'
 
 def open_menu(user)
   case user[:role]

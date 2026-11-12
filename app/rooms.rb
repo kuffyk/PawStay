@@ -13,10 +13,10 @@ def list_rooms
 end
 
 def choose_species
-  puts 'Для кого номер? 1 - кот, 2 - собака, 3 - будь-які'
+  puts 'Для кого номер? 1 - кіт, 2 - собака, 3 - будь-які'
 
   case gets.chomp.strip
-  when '1' then 'кот'
+  when '1' then 'кіт'
   when '2' then 'собака'
   when '3' then 'будь-які'
   end
