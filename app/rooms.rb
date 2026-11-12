@@ -125,7 +125,7 @@ def delete_room
 
   puts "Видалити #{room[:name]}? (так/ні)"
 
-if gets.chomp.strip.downcase == 'ні'
+  unless confirmed?
     puts 'Видалення скасовано'
     return
   end
