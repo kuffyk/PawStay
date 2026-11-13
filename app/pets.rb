@@ -36,7 +36,7 @@ puts 'Введіть вид (кіт, собака..)'
   age = gets.chomp.strip.to_i
 
   if age.nil? || age.negative?
-    puts incorrect_choice
+    incorrect_choice
     return
   end
 
@@ -73,7 +73,7 @@ def delete_pet(user)
 
   puts "Видалити #{pet[:name]}? (так/ні)"
 
-  if gets.chomp.strip.downcase == 'ні'
+  unless confirmed?
     puts 'Видалення скасовано'
     return
   end

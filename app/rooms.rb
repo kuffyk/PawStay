@@ -13,10 +13,10 @@ def list_rooms
 end
 
 def choose_species
-  puts 'Для кого номер? 1 - кот, 2 - собака, 3 - будь-які'
+  puts 'Для кого номер? 1 - кіт, 2 - собака, 3 - будь-які'
 
   case gets.chomp.strip
-  when '1' then 'кот'
+  when '1' then 'кіт'
   when '2' then 'собака'
   when '3' then 'будь-які'
   end
@@ -112,13 +112,20 @@ def edit_room
   puts 'Номер оновлено!'
 end
 
+puts "Вид (зараз: #{room[:species]}). Enter - залишити"
+if gets.chomp.strip != ''
+  puts 'Змінити вид можна лише через вибір нижче'
+  species = choose_species
+  changes[:species] = species unless species.nil?
+end
+
 def delete_room
   room = choose_room('Введіть номер зі списку для видалення')
   return if room.nil?
 
   puts "Видалити #{room[:name]}? (так/ні)"
 
-if gets.chomp.strip.downcase == 'ні'
+  unless confirmed?
     puts 'Видалення скасовано'
     return
   end

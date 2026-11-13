@@ -86,3 +86,7 @@ def show_rooms(rooms)
     number += 1
   end
 end
+
+def confirmed?
+  gets.chomp.strip.downcase == 'так'
+end
