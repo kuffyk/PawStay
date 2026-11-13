@@ -2,8 +2,11 @@ require_relative 'messages'
 require_relative 'profile'
 require_relative 'pets'
 require_relative 'rooms'
+require_relative 'booking'
 
 def open_menu(user)
+  remove_expired_bookings
+
   case user[:role]
   when 'admin' then admin_main_menu(user)
   else user_menu(user)
@@ -39,7 +42,7 @@ def admin_main_menu(user)
       return
     end
     when '2' then pets_menu(user)
-    when '3' then puts 'Бронювання'
+    when '3' then puts book_room(user)
     when '4' then puts 'Мої бронювання'
     when '5' then admin_menu(user)
     else incorrect_choice
