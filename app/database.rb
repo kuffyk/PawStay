@@ -17,7 +17,7 @@ def load_from_database(file_name)
   path = file_path_for(file_name)
   return [] unless File.exist?(path)
 
-  YAML.safe_load_file(path, permitted_classes: [String, Symbol, Integer, BCrypt::Password]) || []
+  YAML.safe_load_file(path, permitted_classes: [String, Symbol, Integer, BCrypt::Password, Date]) || []
 end
 
 def save_to_database(file_name, records)
