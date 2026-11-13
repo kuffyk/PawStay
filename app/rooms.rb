@@ -103,6 +103,13 @@ def edit_room
     changes[:price] = price
   end
 
+  puts "Вид (зараз: #{room[:species]}). Змінити? (так/ні)"
+
+  if confirmed?
+    species = choose_species
+    changes[:species] = species unless species.nil?
+  end
+
   if changes.empty?
     puts 'Нічого не змінено'
     return
@@ -110,13 +117,6 @@ def edit_room
 
   update_in_database('rooms.yml', room[:id], changes)
   puts 'Номер оновлено!'
-end
-
-puts "Вид (зараз: #{room[:species]}). Enter - залишити"
-if gets.chomp.strip != ''
-  puts 'Змінити вид можна лише через вибір нижче'
-  species = choose_species
-  changes[:species] = species unless species.nil?
 end
 
 def delete_room

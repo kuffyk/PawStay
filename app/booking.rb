@@ -25,3 +25,15 @@ end
 def overlaps?(booking, check_in, check_out)
   check_in < booking[:check_out] && check_out > booking[:check_in]
 end
+
+def free_rooms(pet, check_in, check_out)
+  bookings = load_from_database('booking.yml')
+
+  load_from_database('rooms.yml').select do |room|
+    suits = room[:species] == 'будь-які' || room[:species] == pet[:species].downcase
+    free = bookings.none? { |b| b[:room_id] == room[:id] && overlaps?(b, check_in, check_out) }
+
+    suits
+    free
+  end
+end
