@@ -126,9 +126,31 @@ def book_room(user)
   puts "Номер заброньовано!"
 end
 
+def show_bookings(bookings, with_owner: false)
+  pets = load_from_database('pets.yml')
+  rooms = load_from_database('rooms.yml')
+  users = load_from_database('users.yml')
+
+  number = 1
+
+  bookings.each do |b|
+    pet = pets.find { |p| p[:id] == b[:pet_id] }
+    room = rooms.find { |r| r[:id] == b[:room_id] }
+    owner = users.find { |u| u[:id] == b[:user_id] }
+
+    line = "#{number}. #{pet ? pet[:name] : '(тварину видалено)'} - #{room ? room[:name] : '(номер видалено)'}, "
+    line += "#{b[:check_in]} - #{b[:check_out]}, #{b[:total]} грн"
+    line += " (власник: #{owner ? owner[:login] : '?'})" if with_owner
+
+    puts line
+    number += 1
+  end
+end
+
 def remove_expired_bookings
   bookings = load_from_database('booking.yml')
   active = bookings.reject { |b| b[:check_out] < Date.today }
 
   save_to_database('booking.yml', active) if active.size != bookings.size
 end
+
