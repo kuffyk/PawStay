@@ -38,6 +38,8 @@ def free_rooms(pet, check_in, check_out)
   end
 end
 
+rooms = free_rooms(pet, check_in, check_out)
+
 def choose_free_room(rooms)
   puts 'Вільні номери:'
   show_rooms(rooms)
