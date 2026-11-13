@@ -21,3 +21,7 @@ def ask_date
 
   Date.new(year, month, day)
 end
+
+def overlaps?(booking, check_in, check_out)
+  check_in < booking[:check_out] && check_out > booking[:check_in]
+end
