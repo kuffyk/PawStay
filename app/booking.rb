@@ -37,3 +37,15 @@ def free_rooms(pet, check_in, check_out)
     free
   end
 end
+
+def choose_free_room(rooms)
+  puts 'Вільні номери:'
+  show_rooms(rooms)
+  puts 'Введіть номер зі списку'
+
+  index = gets.chomp.strip.to_i
+  room = rooms[index - 1] if index.positive?
+
+  incorrect_choice if room.nil?
+  room
+end
