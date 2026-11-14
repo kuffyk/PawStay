@@ -1,20 +1,22 @@
-require "date"
-require_relative "messages"
-require_relative "database"
-require_relative "pets"
+# frozen_string_literal: true
+
+require 'date'
+require_relative 'messages'
+require_relative 'database'
+require_relative 'pets'
 
 def user_bookings(user)
-  load_from_database("booking.yml").select { |b| b[:user_id] == user[:id] }
+  load_from_database('booking.yml').select { |b| b[:user_id] == user[:id] }
 end
 
 def ask_date
-  puts "День:"
+  puts 'День:'
   day = gets.chomp.strip.to_i
 
-  puts "Місяць (числом):"
+  puts 'Місяць (числом):'
   month = gets.chomp.strip.to_i
 
-  puts "Рік:"
+  puts 'Рік:'
   year = gets.chomp.strip.to_i
 
   return nil unless Date.valid_date?(year, month, day)
@@ -38,9 +40,9 @@ def free_rooms(pet, check_in, check_out, ignore_id = nil)
 end
 
 def choose_free_room(rooms)
-  puts "Вільні номери:"
+  puts 'Вільні номери:'
   show_rooms(rooms)
-  puts "Введіть номер зі списку"
+  puts 'Введіть номер зі списку'
 
   index = gets.chomp.strip.to_i
   room = rooms[index - 1] if index.positive?
@@ -50,18 +52,18 @@ def choose_free_room(rooms)
 end
 
 def book_room(user)
-  pets = load_from_database("pets.yml").select { |p| p[:user_id] == user[:id] }
+  pets = load_from_database('pets.yml').select { |p| p[:user_id] == user[:id] }
   show_pets(pets)
 
-  puts "Введіть номер тварини для бронювання"
+  puts 'Введіть номер тварини для бронювання'
   index = gets.chomp.strip.to_i
   pet = pets[index - 1]
 
   return if pet.nil?
 
-  puts "Введіть дату заїзду"
+  puts 'Введіть дату заїзду'
   check_in = ask_date
-  puts "Введіть дату виїзду"
+  puts 'Введіть дату виїзду'
   check_out = ask_date
 
   if check_in.nil? || check_out.nil?
@@ -69,31 +71,29 @@ def book_room(user)
     return
   end
 
-  if check_in < Date.today
-    puts "Дата заїзду не може бути у минулому"
-  end
+  puts 'Дата заїзду не може бути у минулому' if check_in < Date.today
 
   if check_out < Date.today
-    puts "Дата виїзду не може бути у минулому"
+    puts 'Дата виїзду не може бути у минулому'
     return
   end
 
   if check_out <= check_in
-    puts "Дата виїзду має бути пізніше, ніж дата заїзду"
+    puts 'Дата виїзду має бути пізніше, ніж дата заїзду'
     return
   end
 
-  bookings = load_from_database("booking.yml")
+  bookings = load_from_database('booking.yml')
 
   if bookings.any? { |b| b[:pet_id] == pet[:id] && overlaps?(b, check_in, check_out) }
-    puts "У цієї тварини вже заброньован номер на ці дати"
+    puts 'У цієї тварини вже заброньован номер на ці дати'
     return
   end
 
   rooms = free_rooms(pet, check_in, check_out)
 
   if rooms.empty?
-    puts "Вільних номерів на ці дати немає"
+    puts 'Вільних номерів на ці дати немає'
     return
   end
 
@@ -106,24 +106,24 @@ def book_room(user)
   puts "#{pet[:name]} #{room[:name]}, #{night} діб, вартість #{total} грн. Підтвердити бронювання? (так/ні)"
 
   unless confirmed?
-    puts "Бронювання скасовано"
+    puts 'Бронювання скасовано'
     return
   end
 
   last = bookings.max_by { |b| b[:id] }
   new_id = last ? last[:id] + 1 : 1
 
-  add_to_database("booking.yml", {
-    id: new_id,
-    user_id: user[:id],
-    pet_id: pet[:id],
-    room_id: room[:id],
-    check_in: check_in,
-    check_out: check_out,
-    total: total
-  })
+  add_to_database('booking.yml', {
+                    id: new_id,
+                    user_id: user[:id],
+                    pet_id: pet[:id],
+                    room_id: room[:id],
+                    check_in: check_in,
+                    check_out: check_out,
+                    total: total
+                  })
 
-  puts "Номер заброньовано!"
+  puts 'Номер заброньовано!'
 end
 
 def show_bookings(bookings, with_owner: false)
@@ -154,3 +154,11 @@ def remove_expired_bookings
   save_to_database('booking.yml', active) if active.size != bookings.size
 end
 
+def edit_booking
+  booking = load_from_database('booking.yml').sort_by { |b| b[:check_in] }
+
+  return unless booking.empty
+
+  puts 'Бронювань немає'
+  nil
+end

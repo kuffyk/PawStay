@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'messages'
 require_relative 'profile'
 require_relative 'pets'
@@ -19,10 +21,8 @@ def user_menu(user)
 
     case gets.chomp.strip
     when '1'
-    result = profile_menu(user)
-    if result == :logout || result == :deleted
-      return
-    end
+      result = profile_menu(user)
+      return if %i[logout deleted].include?(result)
     when '2' then puts pets_menu(user)
     when '3' then puts 'Бронювання'
     when '4' then puts 'Мої бронювання'
@@ -37,10 +37,8 @@ def admin_main_menu(user)
 
     case gets.chomp.strip
     when '1'
-    result = profile_menu(user)
-    if result == :logout || result == :deleted
-      return
-    end
+      result = profile_menu(user)
+      return if %i[logout deleted].include?(result)
     when '2' then pets_menu(user)
     when '3' then puts book_room(user)
     when '4' then puts 'Мої бронювання'
@@ -73,10 +71,8 @@ def profile_menu(user)
     when '2' then change_password(user)
     when '3' then return
     when '4' then return :logout
-    when '5' 
-      if delete_account(user)
-    return :deleted
-      end
+    when '5'
+      return :deleted if delete_account(user)
     else incorrect_choice
     end
   end

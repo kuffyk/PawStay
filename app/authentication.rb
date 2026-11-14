@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'database'
 require_relative 'messages'
 require_relative 'menus'
@@ -63,7 +65,7 @@ def sign_in
     return
   end
 
-  puts "Ви успішно увійшли" 
+  puts 'Ви успішно увійшли'
 
   open_menu(user)
 

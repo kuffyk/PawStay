@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require_relative 'messages'
 require_relative 'database'
 
 def user_pets(user)
-  load_from_database('pets.yml').select  { |pet| pet[:user_id] == user[:id]}
+  load_from_database('pets.yml').select { |pet| pet[:user_id] == user[:id] }
 end
 
 def list_pets(user)
@@ -25,7 +27,7 @@ def add_pet(user)
     return
   end
 
-puts 'Введіть вид (кіт, собака..)'
+  puts 'Введіть вид (кіт, собака..)'
   species = gets.chomp.strip
 
   if species.empty?
@@ -120,7 +122,7 @@ def edit_pet(user)
   unless age_input.empty?
     age = age_input.to_i
 
-    if age.negative? || (age == 0 && age_input != '0')
+    if age.negative? || (age.zero? && age_input != '0')
       puts 'Вік має бути числом від 0'
       return
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'messages'
 require_relative 'database'
 
@@ -34,7 +36,7 @@ def choose_room(action_text)
   puts action_text
 
   index = gets.chomp.strip.to_i
-  room = rooms[index - 1] if index > 0
+  room = rooms[index - 1] if index.positive?
 
   incorrect_choice if room.nil?
   room
