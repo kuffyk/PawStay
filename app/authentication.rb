@@ -58,7 +58,9 @@ def sign_in
   password = gets.chomp.strip
 
   users = load_from_database('users.yml')
-  user = users.find { |u| u[:login] == login && u[:password] == password }
+  user = users.find do |u|
+    u[:login] == login && BCrypt::Password.new(u[:password]) == password
+  end
 
   if user.nil?
     puts 'Невірний логін або пароль'
