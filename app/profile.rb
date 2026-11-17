@@ -82,6 +82,9 @@ def delete_account(user)
   pets = load_from_database('pets.yml').reject { |pet| pet[:user_id] == user[:id] }
   save_to_database('pets.yml', pets)
 
+  bookings = load_from_database('booking.yml').reject { |booking| booking[:user_id] == user[:id] }
+  save_to_database('booking.yml', bookings)
+
   delete_from_database('users.yml', user[:id])
   puts 'Акаунт видалено'
   true

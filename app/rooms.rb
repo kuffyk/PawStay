@@ -97,6 +97,11 @@ def edit_room
   unless price_input.empty?
     price = price_input.to_i
 
+    if price.to_s != price_input
+      puts 'Ціна має бути числом більше 0'
+      return
+    end
+
     if price <= 0
       puts 'Ціна має бути числом більше 0'
       return

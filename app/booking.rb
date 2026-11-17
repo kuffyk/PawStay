@@ -71,7 +71,10 @@ def book_room(user)
     return
   end
 
-  puts 'Дата заїзду не може бути у минулому' if check_in < Date.today
+  if check_in < Date.today
+    puts 'Дата заїзду не може бути у минулому'
+    return
+  end
 
   if check_out < Date.today
     puts 'Дата виїзду не може бути у минулому'
