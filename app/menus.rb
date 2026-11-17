@@ -24,8 +24,15 @@ def user_menu(user)
       result = profile_menu(user)
       return if %i[logout deleted].include?(result)
     when '2' then puts pets_menu(user)
-    when '3' then puts 'Бронювання'
-    when '4' then puts 'Мої бронювання'
+    when '3' then book_room(user)
+    when '4'
+      bookings = user_bookings(user)
+
+      if bookings.empty?
+        puts 'У вас ще немає бронювань'
+      else
+        show_bookings(bookings)
+      end
     else incorrect_choice
     end
   end
@@ -40,8 +47,15 @@ def admin_main_menu(user)
       result = profile_menu(user)
       return if %i[logout deleted].include?(result)
     when '2' then pets_menu(user)
-    when '3' then puts book_room(user)
-    when '4' then puts 'Мої бронювання'
+    when '3' then book_room(user)
+    when '4'
+      bookings = user_bookings(user)
+
+      if bookings.empty?
+        puts 'У вас ще немає бронювань'
+      else
+        show_bookings(bookings)
+      end
     when '5' then admin_menu(user)
     else incorrect_choice
     end
@@ -53,10 +67,27 @@ def admin_menu(user)
     show_admin_panel(user)
 
     case gets.chomp.strip
-    when '1' then puts 'Користувачі'
-    when '2' then puts 'Усі бронювання'
+    when '1'
+      users = load_from_database('users.yml')
+
+      if users.empty?
+        puts 'Користувачів ще немає'
+      else
+        users.each_with_index do |account, index|
+          puts "#{index + 1}. #{account[:login]} (#{account[:role]})"
+        end
+      end
+    when '2'
+      bookings = load_from_database('booking.yml')
+
+      if bookings.empty?
+        puts 'Бронювань немає'
+      else
+        show_bookings(bookings, with_owner: true)
+      end
     when '3' then rooms_menu
-    when '4' then return
+    when '4' then edit_booking
+    when '5' then return
     else incorrect_choice
     end
   end
