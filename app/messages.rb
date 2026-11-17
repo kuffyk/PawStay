@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def show_authentication_menu
   puts 'Вітаємо в PawStay!'
   puts 'Оберіть дію:'
@@ -29,12 +31,13 @@ def show_menu_for_admin(user)
   puts '5: Увійти в адмін меню'
 end
 
-def show_admin_panel(user)
+def show_admin_panel(_user)
   puts 'Адмін панель:'
   puts '1: Користувачі'
   puts '2: Усі бронювання'
   puts '3: Номери'
-  puts '4: Назад в меню'
+  puts '4: Змінити бронювання'
+  puts '5: Назад в меню'
 end
 
 def show_profile(user)

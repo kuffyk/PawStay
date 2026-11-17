@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'messages'
 require_relative 'authentication'
 require 'i18n'

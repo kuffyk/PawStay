@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'messages'
 require_relative 'database'
 
@@ -12,17 +14,17 @@ def change_login(user)
 
   users = load_from_database('users.yml')
 
-  if users.any? {|u|  u[:login] == new_login && u[:id] != user[:id]}
+  if users.any? { |u| u[:login] == new_login && u[:id] != user[:id] }
     puts 'Логін вже зайнято'
     return
   end
 
-  if users.any? {|u| u[:login] == new_login && u[:id] == user[:id]}
+  if users.any? { |u| u[:login] == new_login && u[:id] == user[:id] }
     puts 'Ви вже маєте такий логін'
     return
   end
 
-  update_in_database('users.yml', user[:id], { login: new_login})
+  update_in_database('users.yml', user[:id], { login: new_login })
   user[:login] = new_login
 
   puts 'Ваш логін змінено!'
@@ -73,12 +75,15 @@ def delete_account(user)
   puts 'Ви впевнені? (так/ні)'
 
   unless confirmed?
-  puts 'Видалення скасовано'
-  return false
+    puts 'Видалення скасовано'
+    return false
   end
-  
+
   pets = load_from_database('pets.yml').reject { |pet| pet[:user_id] == user[:id] }
   save_to_database('pets.yml', pets)
+
+  bookings = load_from_database('booking.yml').reject { |booking| booking[:user_id] == user[:id] }
+  save_to_database('booking.yml', bookings)
 
   delete_from_database('users.yml', user[:id])
   puts 'Акаунт видалено'
