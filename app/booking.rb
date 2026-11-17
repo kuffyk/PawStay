@@ -155,10 +155,83 @@ def remove_expired_bookings
 end
 
 def edit_booking
-  booking = load_from_database('booking.yml').sort_by { |b| b[:check_in] }
+  bookings = load_from_database('booking.yml').sort_by { |b| b[:check_in] }
 
-  return unless booking.empty
+  if bookings.empty?
+    puts 'Бронювань немає'
+    return
+  end
 
-  puts 'Бронювань немає'
-  nil
+  show_bookings(bookings)
+  puts 'Введіть номер бронювання для зміни'
+
+  index = gets.chomp.strip.to_i
+  booking = bookings[index - 1] if index.positive?
+
+  if booking.nil?
+    incorrect_choice
+    return
+  end
+
+  pet = load_from_database('pets.yml').find { |p| p[:id] == booking[:pet_id] }
+
+  if pet.nil?
+    puts 'Тварину для цього бронювання не знайдено'
+    return
+  end
+
+  puts 'Введіть нову дату заїзду'
+  check_in = ask_date
+  puts 'Введіть нову дату виїзду'
+  check_out = ask_date
+
+  if check_in.nil? || check_out.nil?
+    incorrect_choice
+    return
+  end
+
+  if check_in < Date.today
+    puts 'Дата заїзду не може бути у минулому'
+    return
+  end
+
+  if check_out < Date.today
+    puts 'Дата виїзду не може бути у минулому'
+    return
+  end
+
+  if check_out <= check_in
+    puts 'Дата виїзду має бути пізніше, ніж дата заїзду'
+    return
+  end
+
+  if bookings.any? do |b|
+       b[:id] != booking[:id] && b[:pet_id] == pet[:id] && overlaps?(b, check_in, check_out)
+     end
+    puts 'У цієї тварини вже заброньован номер на ці дати'
+    return
+  end
+
+  rooms = free_rooms(pet, check_in, check_out, booking[:id])
+
+  if rooms.empty?
+    puts 'Вільних номерів на ці дати немає'
+    return
+  end
+
+  room = choose_free_room(rooms)
+  return if room.nil?
+
+  night = (check_out - check_in).to_i
+  total = night * room[:price]
+
+  puts "#{pet[:name]} #{room[:name]}, #{night} діб, вартість #{total} грн. Підтвердити зміни? (так/ні)"
+
+  unless confirmed?
+    puts 'Зміни бронювання скасовано'
+    return
+  end
+
+  update_in_database('booking.yml', booking[:id], {check_in: check_in, check_out: check_out, room_id: room[:id], total: total})
+  puts 'Бронювання змінено!'
 end
