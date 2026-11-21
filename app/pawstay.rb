@@ -4,6 +4,8 @@ require_relative 'messages'
 require_relative 'authentication'
 require 'i18n'
 
+create_database_files
+
 I18n.load_path += Dir[File.join(__dir__, 'config', '*.yml')]
 I18n.available_locales = %i[en ua]
 I18n.default_locale = :ua
