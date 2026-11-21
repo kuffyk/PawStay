@@ -2,6 +2,7 @@
 
 require_relative 'messages'
 require_relative 'authentication'
+require_relative 'database'
 require 'i18n'
 
 create_database_files
