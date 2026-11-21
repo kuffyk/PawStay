@@ -3,6 +3,18 @@
 require 'bcrypt'
 require 'yaml'
 
+def create_database_files
+  database_path = File.expand_path('../database', __dir__)
+
+  Dir.mkdir(database_path) unless Dir.exist?(database_path)
+
+  %w[users.yml pets.yml rooms.yml booking.yml].each do |file_name|
+    file_path = File.join(database_path, file_name)
+
+    File.write(file_path, YAML.dump([])) unless File.exist?(file_path)
+  end
+end
+
 def add_to_database(file_name, new_entity)
   file_path = file_path_for(file_name)
 
