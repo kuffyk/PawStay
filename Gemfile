@@ -4,3 +4,7 @@ source 'https://rubygems.org'
 
 # gem "rails"
 gem 'rubocop', '~> 1.91'
+
+gem "bcrypt", "~> 3.1"
+
+gem 'i18n'
