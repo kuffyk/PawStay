@@ -7,7 +7,7 @@ def list_rooms
   rooms = load_from_database('rooms.yml')
 
   if rooms.empty?
-    puts 'Номерів ще немає'
+    puts 'Номерів ще немає'.yellow
     return
   end
 
@@ -28,7 +28,7 @@ def choose_room(action_text)
   rooms = load_from_database('rooms.yml')
 
   if rooms.empty?
-    puts 'Номерів ще немає'
+    puts 'Номерів ще немає'.yellow
     return nil
   end
 
@@ -47,14 +47,14 @@ def add_room
   name = gets.chomp.strip
 
   if name.empty?
-    puts 'Назва не може бути порожньою'
+    puts 'Назва не може бути порожньою'.red
     return
   end
 
   rooms = load_from_database('rooms.yml')
 
   if rooms.any? { |r| r[:name] == name }
-    puts 'Номер з такою назвою вже існує'
+    puts 'Номер з такою назвою вже існує'.red
     return
   end
 
@@ -69,7 +69,7 @@ def add_room
   price = gets.chomp.strip.to_i
 
   if price <= 0
-    puts 'Ціна має бути числом більше 0'
+    puts 'Ціна має бути числом більше 0'.red
     return
   end
 
@@ -78,7 +78,7 @@ def add_room
 
   add_to_database('rooms.yml', { id: new_id, name: name, species: species, price: price })
 
-  puts 'Номер додано!'
+  puts 'Номер додано!'.green
 end
 
 def edit_room
@@ -98,12 +98,12 @@ def edit_room
     price = price_input.to_i
 
     if price.to_s != price_input
-      puts 'Ціна має бути числом більше 0'
+      puts 'Ціна має бути числом більше 0'.red
       return
     end
 
     if price <= 0
-      puts 'Ціна має бути числом більше 0'
+      puts 'Ціна має бути числом більше 0'.red
       return
     end
 
@@ -118,12 +118,12 @@ def edit_room
   end
 
   if changes.empty?
-    puts 'Нічого не змінено'
+    puts 'Нічого не змінено'.yellow
     return
   end
 
   update_in_database('rooms.yml', room[:id], changes)
-  puts 'Номер оновлено!'
+  puts 'Номер оновлено!'.green
 end
 
 def delete_room
@@ -133,10 +133,10 @@ def delete_room
   puts "Видалити #{room[:name]}? (так/ні)"
 
   unless confirmed?
-    puts 'Видалення скасовано'
+    puts 'Видалення скасовано'.yellow
     return
   end
 
   delete_from_database('rooms.yml', room[:id])
-  puts 'Номер видалено'
+  puts 'Номер видалено'.green
 end

@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require 'terminal-table'
+require 'colorize'
+
 def show_authentication_menu
-  puts 'Вітаємо в PawStay!'
+  puts 'Вітаємо в PawStay!'.cyan
   puts 'Оберіть дію:'
   puts '1: Зареєструватися'
   puts '2: Увійти'
@@ -9,7 +12,7 @@ def show_authentication_menu
 end
 
 def incorrect_choice
-  puts 'Ви ввели невірне значення'
+  puts 'Ви ввели невірне значення'.red
 end
 
 def show_user_menu(user)
@@ -63,13 +66,11 @@ def show_pets_menu
 end
 
 def show_pets(pets)
-  number = 1
-
-  pets.each do |pet|
-    puts "#{number}. #{pet[:name]} (#{pet[:species]}, #{pet[:age]} р.)"
-    puts "   Нотатки: #{pet[:notes]}" unless pet[:notes].empty?
-    number += 1
+  rows = pets.each_with_index.map do |pet, index|
+    [index + 1, pet[:name], pet[:species], pet[:age], pet[:notes]]
   end
+
+  puts Terminal::Table.new(headings: ['№', 'Кличка', 'Вид', 'Вік', 'Нотатки'], rows: rows)
 end
 
 def show_rooms_menu
@@ -82,12 +83,11 @@ def show_rooms_menu
 end
 
 def show_rooms(rooms)
-  number = 1
-
-  rooms.each do |room|
-    puts "#{number}. #{room[:name]} (#{room[:species]}, #{room[:price]} грн/доба)"
-    number += 1
+  rows = rooms.each_with_index.map do |room, index|
+    [index + 1, room[:name], room[:species], "#{room[:price]} грн/доба"]
   end
+
+  puts Terminal::Table.new(headings: ['№', 'Номер', 'Для кого', 'Ціна'], rows: rows)
 end
 
 def confirmed?

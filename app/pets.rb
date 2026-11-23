@@ -11,7 +11,7 @@ def list_pets(user)
   pets = user_pets(user)
 
   if pets.empty?
-    puts 'У вас ще немає тварин'
+    puts 'У вас ще немає тварин'.yellow
     return
   end
 
@@ -53,14 +53,14 @@ def add_pet(user)
 
   add_to_database('pets.yml', { id: new_id, user_id: user[:id], name: name, species: species, age: age, notes: notes })
 
-  puts 'Тварину додано!'
+  puts 'Тварину додано!'.green
 end
 
 def delete_pet(user)
   pets = user_pets(user)
 
   if pets.empty?
-    puts 'У вас ще немає тварин'
+    puts 'У вас ще немає тварин'.yellow
     return
   end
 
@@ -78,19 +78,19 @@ def delete_pet(user)
   puts "Видалити #{pet[:name]}? (так/ні)"
 
   unless confirmed?
-    puts 'Видалення скасовано'
+    puts 'Видалення скасовано'.yellow
     return
   end
 
   delete_from_database('pets.yml', pet[:id])
-  puts 'Тварину видалено'
+  puts 'Тварину видалено'.green
 end
 
 def choose_pet(user, action_text)
   pets = user_pets(user)
 
   if pets.empty?
-    puts 'У вас ще немає тварин'
+    puts 'У вас ще немає тварин'.yellow
     return nil
   end
 
@@ -125,7 +125,7 @@ def edit_pet(user)
     age = age_input.to_i
 
     if age.to_s != age_input
-      puts 'Вік має бути числом від 0'
+      puts 'Вік має бути числом від 0'.red
       return
     end
 
@@ -142,10 +142,10 @@ def edit_pet(user)
   end
 
   if changes.empty?
-    puts 'Нічого не змінено'
+    puts 'Нічого не змінено'.yellow
     return
   end
 
   update_in_database('pets.yml', pet[:id], changes)
-  puts 'Дані змінено!'
+  puts 'Дані змінено!'.green
 end

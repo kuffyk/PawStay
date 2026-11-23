@@ -14,7 +14,7 @@ def sign_up
   users = load_from_database('users.yml')
 
   if users.any? { |u| u[:login] == login }
-    puts 'Логін вже зайнято'
+    puts 'Логін вже зайнято'.red
     return
   end
 
@@ -32,7 +32,7 @@ def sign_up
     admin_code = gets.chomp.strip
 
     if admin_code != ADMIN_CODE
-      puts 'Невірний код адміністратора'
+      puts 'Невірний код адміністратора'.red
       return
     end
 
@@ -47,7 +47,7 @@ def sign_up
 
   add_to_database('users.yml', { id: new_id, login: login, password: secure_password(password), role: role })
 
-  puts 'Реєстрація пройшла успішно!'
+  puts 'Реєстрація пройшла успішно!'.green
 end
 
 def sign_in
@@ -63,11 +63,11 @@ def sign_in
   end
 
   if user.nil?
-    puts 'Невірний логін або пароль'
+    puts 'Невірний логін або пароль'.red
     return
   end
 
-  puts 'Ви успішно увійшли'
+  puts 'Ви успішно увійшли'.green
 
   open_menu(user)
 

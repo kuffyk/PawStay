@@ -8,26 +8,26 @@ def change_login(user)
   new_login = gets.chomp.strip
 
   if new_login.empty?
-    puts 'Логін не може бути порожнім'
+    puts 'Логін не може бути порожнім'.red
     return
   end
 
   users = load_from_database('users.yml')
 
   if users.any? { |u| u[:login] == new_login && u[:id] != user[:id] }
-    puts 'Логін вже зайнято'
+    puts 'Логін вже зайнято'.red
     return
   end
 
   if users.any? { |u| u[:login] == new_login && u[:id] == user[:id] }
-    puts 'Ви вже маєте такий логін'
+    puts 'Ви вже маєте такий логін'.yellow
     return
   end
 
   update_in_database('users.yml', user[:id], { login: new_login })
   user[:login] = new_login
 
-  puts 'Ваш логін змінено!'
+  puts 'Ваш логін змінено!'.green
 end
 
 def change_password(user)
@@ -35,7 +35,7 @@ def change_password(user)
   old_password = gets.chomp.strip
 
   if BCrypt::Password.new(user[:password]) != old_password
-    puts 'Невірний пароль'
+    puts 'Невірний пароль'.red
     return
   end
 
@@ -43,7 +43,7 @@ def change_password(user)
   new_password = gets.chomp.strip
 
   if new_password.empty?
-    puts 'Новий пароль не може бути порожнім'
+    puts 'Новий пароль не може бути порожнім'.red
     return
   end
 
@@ -51,7 +51,7 @@ def change_password(user)
   repeated_new_password = gets.chomp.strip
 
   if new_password != repeated_new_password
-    puts 'Паролі не збігаються'
+    puts 'Паролі не збігаються'.red
     return
   end
 
@@ -60,7 +60,7 @@ def change_password(user)
   update_in_database('users.yml', user[:id], { password: saved_password })
   user[:password] = saved_password
 
-  puts 'Ваш пароль змінено!'
+  puts 'Ваш пароль змінено!'.green
 end
 
 def delete_account(user)
@@ -68,14 +68,14 @@ def delete_account(user)
   password = gets.chomp.strip
 
   if BCrypt::Password.new(user[:password]) != password
-    puts 'Невірний пароль'
+    puts 'Невірний пароль'.red
     return false
   end
 
   puts 'Ви впевнені? (так/ні)'
 
   unless confirmed?
-    puts 'Видалення скасовано'
+    puts 'Видалення скасовано'.yellow
     return false
   end
 
@@ -86,6 +86,6 @@ def delete_account(user)
   save_to_database('booking.yml', bookings)
 
   delete_from_database('users.yml', user[:id])
-  puts 'Акаунт видалено'
+  puts 'Акаунт видалено'.green
   true
 end
