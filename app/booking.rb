@@ -72,31 +72,31 @@ def book_room(user)
   end
 
   if check_in < Date.today
-    puts 'Дата заїзду не може бути у минулому'
+    puts 'Дата заїзду не може бути у минулому'.red
     return
   end
 
   if check_out < Date.today
-    puts 'Дата виїзду не може бути у минулому'
+    puts 'Дата виїзду не може бути у минулому'.red
     return
   end
 
   if check_out <= check_in
-    puts 'Дата виїзду має бути пізніше, ніж дата заїзду'
+    puts 'Дата виїзду має бути пізніше, ніж дата заїзду'.red
     return
   end
 
   bookings = load_from_database('booking.yml')
 
   if bookings.any? { |b| b[:pet_id] == pet[:id] && overlaps?(b, check_in, check_out) }
-    puts 'У цієї тварини вже заброньован номер на ці дати'
+    puts 'У цієї тварини вже заброньован номер на ці дати'.red
     return
   end
 
   rooms = free_rooms(pet, check_in, check_out)
 
   if rooms.empty?
-    puts 'Вільних номерів на ці дати немає'
+    puts 'Вільних номерів на ці дати немає'.yellow
     return
   end
 
@@ -109,7 +109,7 @@ def book_room(user)
   puts "#{pet[:name]} #{room[:name]}, #{night} діб, вартість #{total} грн. Підтвердити бронювання? (так/ні)"
 
   unless confirmed?
-    puts 'Бронювання скасовано'
+    puts 'Бронювання скасовано'.yellow
     return
   end
 
@@ -126,7 +126,7 @@ def book_room(user)
                     total: total
                   })
 
-  puts 'Номер заброньовано!'
+  puts 'Номер заброньовано!'.green
 end
 
 def show_bookings(bookings, with_owner: false)
@@ -134,20 +134,20 @@ def show_bookings(bookings, with_owner: false)
   rooms = load_from_database('rooms.yml')
   users = load_from_database('users.yml')
 
-  number = 1
-
-  bookings.each do |b|
+  rows = bookings.each_with_index.map do |b, index|
     pet = pets.find { |p| p[:id] == b[:pet_id] }
     room = rooms.find { |r| r[:id] == b[:room_id] }
     owner = users.find { |u| u[:id] == b[:user_id] }
 
-    line = "#{number}. #{pet ? pet[:name] : '(тварину видалено)'} - #{room ? room[:name] : '(номер видалено)'}, "
-    line += "#{b[:check_in]} - #{b[:check_out]}, #{b[:total]} грн"
-    line += " (власник: #{owner ? owner[:login] : '?'})" if with_owner
-
-    puts line
-    number += 1
+    row = [index + 1, pet ? pet[:name] : '(тварину видалено)', room ? room[:name] : '(номер видалено)',
+           "#{b[:check_in]} - #{b[:check_out]}", "#{b[:total]} грн"]
+    row << (owner ? owner[:login] : '?') if with_owner
+    row
   end
+
+  headings = ['№', 'Тварина', 'Номер', 'Дати', 'Вартість']
+  headings << 'Власник' if with_owner
+  puts Terminal::Table.new(headings: headings, rows: rows)
 end
 
 def remove_expired_bookings
@@ -194,31 +194,31 @@ def edit_booking
   end
 
   if check_in < Date.today
-    puts 'Дата заїзду не може бути у минулому'
+    puts 'Дата заїзду не може бути у минулому'.red
     return
   end
 
   if check_out < Date.today
-    puts 'Дата виїзду не може бути у минулому'
+    puts 'Дата виїзду не може бути у минулому'.red
     return
   end
 
   if check_out <= check_in
-    puts 'Дата виїзду має бути пізніше, ніж дата заїзду'
+    puts 'Дата виїзду має бути пізніше, ніж дата заїзду'.red
     return
   end
 
   if bookings.any? do |b|
        b[:id] != booking[:id] && b[:pet_id] == pet[:id] && overlaps?(b, check_in, check_out)
      end
-    puts 'У цієї тварини вже заброньован номер на ці дати'
+    puts 'У цієї тварини вже заброньован номер на ці дати'.red
     return
   end
 
   rooms = free_rooms(pet, check_in, check_out, booking[:id])
 
   if rooms.empty?
-    puts 'Вільних номерів на ці дати немає'
+    puts 'Вільних номерів на ці дати немає'.yellow
     return
   end
 
@@ -231,10 +231,10 @@ def edit_booking
   puts "#{pet[:name]} #{room[:name]}, #{night} діб, вартість #{total} грн. Підтвердити зміни? (так/ні)"
 
   unless confirmed?
-    puts 'Зміни бронювання скасовано'
+    puts 'Зміни бронювання скасовано'.yellow
     return
   end
 
   update_in_database('booking.yml', booking[:id], {check_in: check_in, check_out: check_out, room_id: room[:id], total: total})
-  puts 'Бронювання змінено!'
+  puts 'Бронювання змінено!'.green
 end

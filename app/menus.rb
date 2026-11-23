@@ -73,9 +73,11 @@ def admin_menu(user)
       if users.empty?
         puts 'Користувачів ще немає'
       else
-        users.each_with_index do |account, index|
-          puts "#{index + 1}. #{account[:login]} (#{account[:role]})"
+        rows = users.each_with_index.map do |account, index|
+          [index + 1, account[:login], account[:role]]
         end
+
+        puts Terminal::Table.new(headings: ['№', 'Логін', 'Роль'], rows: rows)
       end
     when '2'
       bookings = load_from_database('booking.yml')
