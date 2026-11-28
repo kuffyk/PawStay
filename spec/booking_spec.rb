@@ -18,4 +18,20 @@ describe 'overlaps?' do
       expect(overlaps?(booking, Date.new(2030, 5, 4), Date.new(2030, 5, 8))).to eq(true)
     end
   end
+
+  context 'when one booking is inside another' do
+    it 'returns true' do
+      booking = { check_in: Date.new(2030, 5, 1), check_out: Date.new(2030, 5, 10) }
+
+      expect(overlaps?(booking, Date.new(2030, 5, 3), Date.new(2030, 5, 6))).to eq(true)
+    end
+  end
+
+  context 'when bookings are on separate dates' do
+    it 'returns false' do
+      booking = { check_in: Date.new(2030, 5, 1), check_out: Date.new(2030, 5, 5) }
+
+      expect(overlaps?(booking, Date.new(2030, 5, 6), Date.new(2030, 5, 8))).to eq(false)
+    end
+  end
 end
